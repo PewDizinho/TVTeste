@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Example</title>
+</head>
+
+<body>
+    <ul id="messageList"></ul>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SSE Example</title>
+    </head>
+
+    <body>
+        <p id="counterDisplay">Carregando</p>
+
+        <script>
+            const counterDisplay = document.getElementById('counterDisplay');
+
+            const eventSource = new EventSource('http://192.168.100.222:3000/events');
+
+
+            eventSource.onmessage = (event) => {
+                counterDisplay.textContent = JSON.parse(event.data).data;
+            };
+
+            eventSource.onerror = (error) => {
+                console.error('EventSource failed:', error);
+                eventSource.close();
+            };
+        </script>
+    </body>
+
+    </html>
+
+    <script>
+        const messageList = document.getElementById('messageList');
+
+        const eventSource = new EventSource('/events');
+
+        eventSource.onmessage = (event) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = event.data;
+            messageList.appendChild(listItem);
+        };
+
+        eventSource.onerror = (error) => {
+            console.error('EventSource failed:', error);
+            eventSource.close();
+        };
+    </script>
+</body>
+
+</html>

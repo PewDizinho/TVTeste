@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Data to /api</title>
+</head>
+
+<body>
+    <h1>Send Data to /api</h1>
+    <textarea onkeyup="sendData()" id="dataInput" rows="4" cols="50" placeholder="Type your data here"></textarea><br>
+
+    <script>
+        function sendData() {
+            // Get the data from the textarea
+            const inputData = document.getElementById('dataInput').value;
+
+            // Make a POST request to the /api endpoint
+            fetch('http://192.168.100.222:3000/api', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: inputData })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data); // Log the response from the server
+                    // alert('Data sent successfully!'); // Display a success message
+                })
+                .catch(error => {
+                    console.error('Error:', error); // Log any errors
+                    alert('Failed to send data.'); // Display an error message
+                });
+        }
+    </script>
+</body>
+
+</html>
